@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,18 @@ public class ClientService {
 		copyDtoToEntity(client, clientDTO);
 		client = repository.save(client);
 		return new ClientDTO(client);
+	}
+
+	@Transactional
+	public ClientDTO update(Long id, ClientDTO clientDTO) {
+		try {
+			Client client = repository.getOne(id);
+			copyDtoToEntity(client, clientDTO);
+			client = repository.save(client);
+			return new ClientDTO(client);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Client id not found");
+		}
 	}
 
 	private void copyDtoToEntity(Client client, ClientDTO clientDTO) {
