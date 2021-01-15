@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/clients")
@@ -34,6 +38,12 @@ public class ClientResource {
 	public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
 		ClientDTO client = service.findById(id);
 		return ResponseEntity.ok().body(client);
+	}
+
+	@PostMapping
+	public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO clientDTO) {
+		clientDTO = service.insert(clientDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(clientDTO);
 	}
 
 }
