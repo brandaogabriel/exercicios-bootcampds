@@ -5,6 +5,7 @@ import com.gabrielexercicios.cp1.entities.Client;
 import com.gabrielexercicios.cp1.repositories.ClientRepository;
 import com.gabrielexercicios.cp1.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class ClientService {
 	@Transactional(readOnly = true)
 	public ClientDTO findById(Long id) {
 		Optional<Client> obj = repository.findById(id);
-		Client client = obj.orElseThrow(() -> new ResourceNotFoundException("Client id not found."));
+		Client client = obj.orElseThrow(() -> new ResourceNotFoundException("Client id not found"));
 		return new ClientDTO(client);
 	}
 
@@ -48,6 +49,14 @@ public class ClientService {
 			client = repository.save(client);
 			return new ClientDTO(client);
 		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Client id not found");
+		}
+	}
+
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Client id not found");
 		}
 	}

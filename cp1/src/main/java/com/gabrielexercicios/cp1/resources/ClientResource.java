@@ -1,7 +1,6 @@
 package com.gabrielexercicios.cp1.resources;
 
 import com.gabrielexercicios.cp1.dtos.ClientDTO;
-import com.gabrielexercicios.cp1.entities.Client;
 import com.gabrielexercicios.cp1.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,9 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/clients")
@@ -50,5 +47,11 @@ public class ClientResource {
 	public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientDTO clientDTO) {
 		clientDTO = service.update(id, clientDTO);
 		return ResponseEntity.ok().body(clientDTO);
+	}
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<ClientDTO> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
