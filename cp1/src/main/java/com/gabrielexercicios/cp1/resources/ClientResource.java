@@ -9,6 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 
 @RestController
@@ -26,7 +29,8 @@ public class ClientResource {
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy
 	) {
 
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage,
+				Sort.Direction.valueOf(direction), orderBy);
 		Page<ClientDTO> list = service.findAllPaged(pageRequest);
 		return ResponseEntity.ok().body(list);
 	}
@@ -40,7 +44,9 @@ public class ClientResource {
 	@PostMapping
 	public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO clientDTO) {
 		clientDTO = service.insert(clientDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(clientDTO);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+				.buildAndExpand(clientDTO.getId()).toUri();
+		return ResponseEntity.created(uri).body(clientDTO);
 	}
 
 	@PutMapping(value = "/{id}")
