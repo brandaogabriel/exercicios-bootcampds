@@ -5,7 +5,11 @@ import './app.css';
 import Routes from './Routes';
 
 const App = (): JSX.Element => {
-  return <Routes />;
+  return (
+    <>
+      <Routes />
+    </>
+  );
 };
 
 export default App;
