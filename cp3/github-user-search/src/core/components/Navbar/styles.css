@@ -1,0 +1,13 @@
+.navbar {
+  background: #1890FF;
+  height: 62px;
+}
+
+.navbar-text {
+  color: #fff;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  padding-left: 40px;
+  padding-top: 15px;
+}
