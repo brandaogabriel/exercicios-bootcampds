@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ButtoIcon from '../../core/components/ButtoIcon';
 
 import './styles.css';
@@ -19,7 +20,9 @@ const Home = (): JSX.Element => (
       Mateusz Wierzbicki:
       <span className="home-content-email"> antforfigma@gmail.com</span>
     </p>
-    <ButtoIcon text={'Começar'} />
+    <Link to="/search">
+      <ButtoIcon text={'Começar'} />
+    </Link>
   </div>
 );
 
