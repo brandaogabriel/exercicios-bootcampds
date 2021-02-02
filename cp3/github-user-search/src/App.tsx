@@ -1,14 +1,11 @@
 import React from 'react';
 
 import './app.css';
-import Navbar from './core/components/Navbar';
+
+import Routes from './Routes';
 
 const App = (): JSX.Element => {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  );
+  return <Routes />;
 };
 
 export default App;

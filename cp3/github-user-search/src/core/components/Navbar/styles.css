@@ -3,6 +3,10 @@
   height: 62px;
 }
 
+.navbar-link {
+  text-decoration: none;
+}
+
 .navbar-text {
   color: #fff;
   font-weight: 500;
