@@ -1,9 +1,21 @@
 import React from 'react';
+
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.locale('pt-br');
+dayjs.extend(relativeTime);
+
 import ButtoIcon from 'core/components/ButtonIcon';
 import { GithubUser } from 'core/types/GithubUser';
 
 import './styles.css';
 import { Link } from 'react-router-dom';
+
+function formatDateFromNow(date: string): string {
+  return dayjs(date).format('DD/MM/YYYY');
+}
 
 type Props = {
   gitHubUser: GithubUser;
@@ -53,7 +65,7 @@ const SearchDetails = ({ gitHubUser }: Props): JSX.Element => {
           </p>
           <p className="user-infor-details">
             <span className="user-info-details-attribute">Membro desde:</span>{' '}
-            {gitHubUser.created_at}
+            {formatDateFromNow(gitHubUser.created_at)}
           </p>
         </div>
       </div>
