@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ButtoIcon from '../../core/components/ButtoIcon';
+import ButtoIcon from 'core/components/ButtonIcon';
 
 import './styles.css';
 

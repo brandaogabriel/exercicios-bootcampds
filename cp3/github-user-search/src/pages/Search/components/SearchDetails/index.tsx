@@ -1,6 +1,6 @@
 import React from 'react';
-import ButtoIcon from '../../../../core/components/ButtoIcon';
-import { GithubUser } from '../../../../core/types/GithubUser';
+import ButtoIcon from 'core/components/ButtonIcon';
+import { GithubUser } from 'core/types/GithubUser';
 
 import './styles.css';
 

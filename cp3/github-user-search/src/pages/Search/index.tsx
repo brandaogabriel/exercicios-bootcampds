@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import ButtoIcon from '../../core/components/ButtoIcon';
-import { GithubUser } from '../../core/types/GithubUser';
-import getUserInfoFromGithub from '../../core/utils/request';
+
+import ButtoIcon from 'core/components/ButtonIcon';
+import { GithubUser } from 'core/types/GithubUser';
+import getUserInfoFromGithub from 'core/utils/request';
+
+import ImageLoader from './components/Loaders/ImageLoader';
+import InfoLoader from './components/Loaders/InfoLoader';
 import SearchDetails from './components/SearchDetails';
 
 import './styles.css';
 
 const Search = (): JSX.Element => {
+  const [isSearching, setIsSearching] = useState<boolean>(false);
   const [userName, setUserName] = useState('');
   const [gitHubUser, setGitHubUser] = useState<GithubUser>({
     public_repos: 0,
@@ -25,9 +30,12 @@ const Search = (): JSX.Element => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    getUserInfoFromGithub(userName).then(response => {
-      setGitHubUser(response.data);
-    });
+    setIsSearching(true);
+    getUserInfoFromGithub(userName)
+      .then(response => {
+        setGitHubUser(response.data);
+      })
+      .finally(() => setIsSearching(false));
   };
 
   return (
@@ -48,7 +56,14 @@ const Search = (): JSX.Element => {
           </div>
         </form>
       </div>
-      <SearchDetails gitHubUser={gitHubUser} />
+      {isSearching ? (
+        <div className="loader">
+          <ImageLoader />
+          <InfoLoader />
+        </div>
+      ) : (
+        <SearchDetails gitHubUser={gitHubUser} />
+      )}
     </>
   );
 };
