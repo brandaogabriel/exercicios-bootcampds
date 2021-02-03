@@ -14,6 +14,7 @@ const Search = (): JSX.Element => {
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [userName, setUserName] = useState('');
   const [gitHubUser, setGitHubUser] = useState<GithubUser>({
+    login: '',
     public_repos: 0,
     followers: 0,
     following: 0,

@@ -3,6 +3,7 @@ import ButtoIcon from 'core/components/ButtonIcon';
 import { GithubUser } from 'core/types/GithubUser';
 
 import './styles.css';
+import { Link } from 'react-router-dom';
 
 type Props = {
   gitHubUser: GithubUser;
@@ -14,9 +15,12 @@ const SearchDetails = ({ gitHubUser }: Props): JSX.Element => {
       <div className="user-infor-img">
         <img src={`${gitHubUser.avatar_url}`} className="user-photo" />
         <div className="btn-getInfo">
-          <a href="http://github.com">
+          <Link
+            to={{ pathname: `https://github.com/${gitHubUser.login}` }}
+            target="_blank"
+          >
             <ButtoIcon text={'Ver perfil'} />
-          </a>
+          </Link>
         </div>
       </div>
 
