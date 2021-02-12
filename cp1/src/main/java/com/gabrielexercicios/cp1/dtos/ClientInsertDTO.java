@@ -1,7 +1,10 @@
 package com.gabrielexercicios.cp1.dtos;
 
+import com.gabrielexercicios.cp1.services.validation.ClientInsertValid;
+
 import javax.validation.constraints.NotBlank;
 
+@ClientInsertValid
 public class ClientInsertDTO extends ClientDTO {
 	private static final long serialVersionUID = 1L;
 
