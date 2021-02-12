@@ -36,8 +36,12 @@ public class ClientUpdateValidator implements ConstraintValidator<ClientUpdateVa
 		Client client = clientRepository.findByCpf(value.getCpf());
 		List<FieldMessage> errors = new ArrayList<>();
 
-		if(client == null || !client.getId().equals(clientId))
+		if(client == null)
 			errors.add(new FieldMessage("cpf", "CPF não pode ser alterado"));
+
+		if(client != null && !client.getId().equals(clientId)) {
+			errors.add(new FieldMessage("id", "Id incompatível com o cliente"));
+		}
 
 		for(FieldMessage e : errors) {
 			context.disableDefaultConstraintViolation();
