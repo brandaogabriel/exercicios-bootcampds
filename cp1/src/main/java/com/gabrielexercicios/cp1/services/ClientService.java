@@ -2,6 +2,7 @@ package com.gabrielexercicios.cp1.services;
 
 import com.gabrielexercicios.cp1.dtos.ClientDTO;
 import com.gabrielexercicios.cp1.dtos.ClientInsertDTO;
+import com.gabrielexercicios.cp1.dtos.ClientUpdateDTO;
 import com.gabrielexercicios.cp1.dtos.RoleDTO;
 import com.gabrielexercicios.cp1.entities.Client;
 import com.gabrielexercicios.cp1.entities.Role;
@@ -60,10 +61,10 @@ public class ClientService implements UserDetailsService {
 	}
 
 	@Transactional
-	public ClientDTO update(Long id, ClientDTO clientDTO) {
+	public ClientDTO update(Long id, ClientUpdateDTO clientUpdateDTO) {
 		try {
 			Client client = repository.getOne(id);
-			copyDtoToEntity(client, clientDTO);
+			copyDtoToEntity(client, clientUpdateDTO);
 			client = repository.save(client);
 			return new ClientDTO(client);
 		} catch (EntityNotFoundException e) {

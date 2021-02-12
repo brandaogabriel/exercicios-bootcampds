@@ -2,6 +2,7 @@ package com.gabrielexercicios.cp1.resources;
 
 import com.gabrielexercicios.cp1.dtos.ClientDTO;
 import com.gabrielexercicios.cp1.dtos.ClientInsertDTO;
+import com.gabrielexercicios.cp1.dtos.ClientUpdateDTO;
 import com.gabrielexercicios.cp1.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,13 +51,13 @@ public class ClientResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientDTO clientDTO) {
-		clientDTO = service.update(id, clientDTO);
+	public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientUpdateDTO clientUpdateDTO) {
+		ClientDTO clientDTO = service.update(id, clientUpdateDTO);
 		return ResponseEntity.ok().body(clientDTO);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<ClientDTO> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
