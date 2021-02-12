@@ -1,8 +1,12 @@
 package com.gabrielexercicios.cp1.services;
 
 import com.gabrielexercicios.cp1.dtos.ClientDTO;
+import com.gabrielexercicios.cp1.dtos.ClientInsertDTO;
+import com.gabrielexercicios.cp1.dtos.RoleDTO;
 import com.gabrielexercicios.cp1.entities.Client;
+import com.gabrielexercicios.cp1.entities.Role;
 import com.gabrielexercicios.cp1.repositories.ClientRepository;
+import com.gabrielexercicios.cp1.repositories.RoleRepository;
 import com.gabrielexercicios.cp1.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +32,9 @@ public class ClientService implements UserDetailsService {
 	private ClientRepository repository;
 
 	@Autowired
+	private RoleRepository roleRepository;
+
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
 	@Transactional(readOnly = true)
@@ -44,10 +51,10 @@ public class ClientService implements UserDetailsService {
 	}
 
 	@Transactional
-	public ClientDTO insert(ClientDTO clientDTO) {
+	public ClientDTO insert(ClientInsertDTO clientInsertDTO) {
 		Client client = new Client();
-		copyDtoToEntity(client, clientDTO);
-		client.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
+		copyDtoToEntity(client, clientInsertDTO);
+		client.setPassword(passwordEncoder.encode(clientInsertDTO.getPassword()));
 		client = repository.save(client);
 		return new ClientDTO(client);
 	}
@@ -78,6 +85,12 @@ public class ClientService implements UserDetailsService {
 		client.setIncome(clientDTO.getIncome());
 		client.setBirthDate(clientDTO.getBirthDate());
 		client.setChildren(clientDTO.getChildren());
+
+		client.getRoles().clear();
+		for(RoleDTO roleDTO : clientDTO.getRoles()) {
+			Role role = roleRepository.getOne(roleDTO.getId());
+			client.getRoles().add(role);
+		}
 	}
 
 	@Override

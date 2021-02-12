@@ -4,6 +4,8 @@ import com.gabrielexercicios.cp1.entities.Client;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientDTO implements Serializable {
 
@@ -14,21 +16,19 @@ public class ClientDTO implements Serializable {
 	private String cpf;
 	private Double income;
 
-	private String password;
-
 	private Instant birthDate;
 	private Integer children;
 
-	public ClientDTO(){
+	private List<RoleDTO> roles = new ArrayList<>();
+
+	public ClientDTO() {
 	}
 
-	public ClientDTO(Long id, String name, String cpf, Double income, String password, Instant birthDate,
-									 Integer children) {
+	public ClientDTO(Long id, String name, String cpf, Double income, Instant birthDate, Integer children) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
 		this.income = income;
-		this.password = password;
 		this.birthDate = birthDate;
 		this.children = children;
 	}
@@ -38,9 +38,9 @@ public class ClientDTO implements Serializable {
 		this.name = client.getName();
 		this.cpf = client.getCpf();
 		this.income = client.getIncome();
-		this.password = client.getPassword();
 		this.birthDate = client.getBirthDate();
 		this.children = client.getChildren();
+		client.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
 	}
 
 	public Long getId() {
@@ -71,14 +71,6 @@ public class ClientDTO implements Serializable {
 		this.income = income;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public Instant getBirthDate() {
 		return birthDate;
 	}
@@ -93,5 +85,9 @@ public class ClientDTO implements Serializable {
 
 	public void setChildren(Integer children) {
 		this.children = children;
+	}
+
+	public List<RoleDTO> getRoles() {
+		return roles;
 	}
 }

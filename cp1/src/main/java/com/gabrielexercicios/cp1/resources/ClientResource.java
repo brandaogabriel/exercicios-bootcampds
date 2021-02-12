@@ -1,6 +1,7 @@
 package com.gabrielexercicios.cp1.resources;
 
 import com.gabrielexercicios.cp1.dtos.ClientDTO;
+import com.gabrielexercicios.cp1.dtos.ClientInsertDTO;
 import com.gabrielexercicios.cp1.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,8 +42,8 @@ public class ClientResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO clientDTO) {
-		clientDTO = service.insert(clientDTO);
+	public ResponseEntity<ClientDTO> insert(@RequestBody ClientInsertDTO clientInsertDTO) {
+		ClientDTO clientDTO = service.insert(clientInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
 				.buildAndExpand(clientDTO.getId()).toUri();
 		return ResponseEntity.created(uri).body(clientDTO);
