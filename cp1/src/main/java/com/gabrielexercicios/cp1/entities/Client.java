@@ -22,9 +22,10 @@ public class Client implements UserDetails, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+
+	@Column(unique = true)
 	private String cpf;
 	private Double income;
-
 	private String password;
 
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")

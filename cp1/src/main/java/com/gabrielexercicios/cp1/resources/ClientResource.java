@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 
@@ -43,7 +44,7 @@ public class ClientResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<ClientDTO> insert(@RequestBody ClientInsertDTO clientInsertDTO) {
+	public ResponseEntity<ClientDTO> insert(@Valid @RequestBody ClientInsertDTO clientInsertDTO) {
 		ClientDTO clientDTO = service.insert(clientInsertDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
 				.buildAndExpand(clientDTO.getId()).toUri();

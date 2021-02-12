@@ -2,6 +2,8 @@ package com.gabrielexercicios.cp1.dtos;
 
 import com.gabrielexercicios.cp1.entities.Client;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,8 +14,14 @@ public class ClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+
+	@NotBlank(message = "Nome é obrigatório")
 	private String name;
+
+	@NotBlank(message = "Cpf é obrigatório")
 	private String cpf;
+
+	@Positive(message = "Renda deve ser um valor positivo")
 	private Double income;
 
 	private Instant birthDate;
