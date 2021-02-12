@@ -4,10 +4,16 @@ import com.gabrielexercicios.cp1.dtos.ClientDTO;
 import com.gabrielexercicios.cp1.entities.Client;
 import com.gabrielexercicios.cp1.repositories.ClientRepository;
 import com.gabrielexercicios.cp1.services.exceptions.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,10 +21,14 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-public class ClientService {
+public class ClientService implements UserDetailsService {
+	private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
 
 	@Autowired
 	private ClientRepository repository;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@Transactional(readOnly = true)
 	public Page<ClientDTO> findAllPaged(PageRequest pageRequest) {
@@ -37,6 +47,7 @@ public class ClientService {
 	public ClientDTO insert(ClientDTO clientDTO) {
 		Client client = new Client();
 		copyDtoToEntity(client, clientDTO);
+		client.setPassword(passwordEncoder.encode(clientDTO.getPassword()));
 		client = repository.save(client);
 		return new ClientDTO(client);
 	}
@@ -69,4 +80,16 @@ public class ClientService {
 		client.setChildren(clientDTO.getChildren());
 	}
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Client client = repository.findByCpf(username);
+
+		if(client == null) {
+			logger.warn("Cpf not found: " + username);
+			throw new UsernameNotFoundException("Client not found");
+		}
+
+		logger.info("Client found: " + username);
+		return client;
+	}
 }
