@@ -15,7 +15,7 @@ public class FinancingTest {
 	}
 
 	@Test
-	public void entryShouldBeTwentyPercentOfTotalAmount() {
+	public void entryShouldReturnTwentyPercentOfTotalAmount() {
 		double expectedValue = 200.00;
 		double entry = financing.entry();
 
@@ -23,7 +23,7 @@ public class FinancingTest {
 	}
 
 	@Test
-	public void quotaShouldBeEightyPercentOfTotalAmountDividedByMonths() {
+	public void quotaShouldReturnEightyPercentOfTotalAmountDividedByMonths() {
 		double expectedValue = 200.00;
 		double quota = financing.quota();
 
@@ -36,41 +36,41 @@ public class FinancingTest {
 	}
 
 	@Test
-	public void constructorShouldThrowIllegalArgumentExceptionWhenInsufficientIncome() {
+	public void constructorShouldThrowIllegalArgumentExceptionWhenInvalidData() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> new Financing(1000.00, 399.00, 2));
 	}
 
 	@Test
-	public void setTotalAmountShouldBeValid() {
+	public void setTotalAmountShouldSetValueWhenValidData() {
 		financing.setTotalAmount(250.00);
 		Assertions.assertEquals(250.00, financing.getTotalAmount());
 	}
 
 	@Test
-	public void setTotalAmountShouldThrowIllegalArgumentExceptionWhenInsufficientAmount() {
+	public void setTotalAmountShouldThrowIllegalArgumentExceptionWhenInvalidData() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> financing.setTotalAmount(3000.00));
 	}
 
 	@Test
-	public void setIncomeShouldBeValid() {
+	public void setIncomeShouldSetValueWhenValidData() {
 		financing.setIncome(400.00);
 		Assertions.assertEquals(400.00, financing.getIncome());
 	}
 
 	@Test
-	public void setIncomeShouldThrowIllegalArgumentExceptionWhenInsufficientIncome() {
+	public void setIncomeShouldThrowIllegalArgumentExceptionWhenInvalidData() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> financing.setIncome(100.00));
 	}
 
 	@Test
-	public void setMonthsShouldBeValid() {
+	public void setMonthsShouldSetValueWhenValidData() {
 		financing.setMonths(5);
 		Assertions.assertEquals(5, financing.getMonths());
 	}
 
 
 	@Test
-	public void setMonthsShouldThrowIllegalArgumentExceptionWhenInsufficientMonths() {
+	public void setMonthsShouldThrowIllegalArgumentExceptionWhenInvalidData() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> financing.setMonths(1));
 	}
 }
